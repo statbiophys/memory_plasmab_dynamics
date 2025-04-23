@@ -1,0 +1,14 @@
+	group_index	patient	cell	time_id	time	repl_count
+pat1_t1_mc	9	1	m	1	2010	5
+pat1_t2_mc	6	1	m	2	2020	5
+pat1_t1_pc	12	1	p	1	jun2018	2
+pat1_t2_pc	13	1	p	2	nov2018	2
+pat1_t3_pc	3	1	p	3	sep2020	7
+pat1_t4_pc	11	1	p	4	feb2021	7
+pat2_t1_mc	2	2	m	1	2014	5
+pat2_t2_mc	8	2	m	2	may2020	5
+pat2_t3_mc	7	2	m	3	jul2020	5
+pat2_t1_pc	5	2	p	1	2014	1
+pat2_t2_pc	4	2	p	2	may2020	3
+pat2_t3_pc	1	2	p	3	jul2020	2
+pat2_t4_pc	10	2	p	4	nov2020	2

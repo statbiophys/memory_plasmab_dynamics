@@ -1,0 +1,14 @@
+# Explicit time of each time index
+pat1	mc	t1	2010
+pat1	mc	t2	2020
+pat1	pc	t1	jun2018
+pat1	pc	t2	nov2018
+pat1	pc	t3	sep2020
+pat1	pc	t4	feb2021
+pat2	mc	t1	2014
+pat2	mc	t2	may2020
+pat2	mc	t3	jul2020
+pat2	pc	t1	2014
+pat2	pc	t2	may2020
+pat2	pc	t3	jul2020
+pat2	pc	t4	nov2020

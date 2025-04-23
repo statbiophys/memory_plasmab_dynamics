@@ -1,0 +1,11 @@
+# Mapping of the group to the informative name composed of the patient, time (relative to the patient) and plasma or memory cell
+g1	pat2_t3_pc
+g2	pat2_t1_mc
+g3	pat1_t2_pc
+g4	pat2_t2_pc
+g5	pat2_t1_pc
+g6	pat1_t2_mc
+g7	pat2_t3_mc
+g8	pat2_t2_mc
+g9	pat1_t1_mc
+g10	pat2_t4_pc

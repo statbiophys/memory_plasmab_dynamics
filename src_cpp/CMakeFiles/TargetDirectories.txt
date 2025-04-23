@@ -1,3 +1,0 @@
-/home/andrea/Documents/Immunology/HealthyBCells/func_build/CMakeFiles/like_func.dir
-/home/andrea/Documents/Immunology/HealthyBCells/func_build/CMakeFiles/edit_cache.dir
-/home/andrea/Documents/Immunology/HealthyBCells/func_build/CMakeFiles/rebuild_cache.dir
