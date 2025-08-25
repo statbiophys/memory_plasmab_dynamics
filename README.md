@@ -12,7 +12,7 @@
 - **Hilary** (https://github.com/statbiophys/hilary) for the clonal family assignment of both datasets.
 - **gcc compiler** (version 11.4.0): for the c++ scripts.
 - **gsl libraries** (https://www.gnu.org/software/gsl/) for the c++ scripts.
-- **Python 3.8.8** and its standard libraries.
-- **pybind11** (https://pybind11.readthedocs.io/en/stable/basics.html) to wrap the cpp functions into python scripts
+- **Python** (version 3.8.8) and its standard libraries.
+- **pybind11** (https://pybind11.readthedocs.io/en/stable/basics.html) to wrap the cpp functions into python scripts.
 
 For any question or further clarification contact me at andrea.mazzolini.90@gmail.com
