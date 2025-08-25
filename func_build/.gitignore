@@ -1,0 +1,5 @@
+func_build/CMakeFiles/*
+func_build/CMakeCache.txt
+cmake_install.cmake
+like_func.cpython-38-x86_64-linux-gnu.so
+Makefile

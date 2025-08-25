@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -Wall -Wextra -fPIC -flto -L/usr/local/lib -shared  -o like_func.cpython-38-x86_64-linux-gnu.so CMakeFiles/like_func.dir/func_pywrap.cpp.o  /usr/local/lib/libgsl.so /usr/local/lib/libgslcblas.so 
