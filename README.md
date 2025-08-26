@@ -27,12 +27,11 @@ Before executing any of the inference notebooks, the c++ functions have to be wr
 You need, first, to modify the CMakeLists.txt file and set the directory of pybind installed in your system.
 Then you launch two commands from teminal:
 
-´cmake CMakeLists.txt´
+cmake CMakeLists.txt
 
-´cmake --build .´
+cmake --build .
 
 
 This code can be used for reproducing all the analysis and the figures of the paper. 
-I made some effort in commenting and explaining how to how to execute it, however it can still be hard to read in some parts from external users. 
-There can also be potential probelms in installing all the dependecies.
+I made some effort in commenting and explaining how to execute it, however it can still be hard to read in some parts or execute it from external users. 
 If you are interested in running it and you're having hard time, please send me an email at andrea.mazzolini.90@gmail.com
