@@ -1,0 +1,5 @@
+success:	True
+minus_ll:	59482.81182238961
+best parameters:
+alpha:	2.7007703847731697
+fmin:	-5.681389947538019

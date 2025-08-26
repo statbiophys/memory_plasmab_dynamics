@@ -32,6 +32,27 @@ cmake CMakeLists.txt
 cmake --build .
 
 
+### Reproducing the figures
+For each figure we point at the notebook (for both the datasets) that is used to generate it. 
+#### Main
+- **Fig. 2**: `7.3_infer_noise_marginals.ipynb`
+- **Fig. 3**:
+- **Fig. 4**:
+
+#### Supplementary Material
+- **Figs. S1, S2**: `5_seq_info.ipynb`
+- **Figs. S3, S4**: `7.2_infer_noise_results.ipynb`
+- **Figs. S5**: `7.3_infer_noise_marginals.ipynb`
+- **Figs. S6**: 
+- **Figs. S7**: 
+- **Figs. S8**: 
+- **Figs. S9**: 
+- **Figs. S10**: 
+- **Figs. S11**: 
+
+
+
+
 This code can be used for reproducing all the analysis and the figures of the paper. 
 I made some effort in commenting and explaining how to execute it, however it can still be hard to read in some parts or execute it from external users. 
 If you are interested in running it and you're having hard time, please send me an email at andrea.mazzolini.90@gmail.com

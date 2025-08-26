@@ -20,7 +20,8 @@ def read_family_frame(sample_name, is_replicate=False, fam_type='familiy_pairs')
         f = pd.read_csv('sequences/replicates/'+sample_name+'.tsv', sep='\t', index_col=0, low_memory=False)
     else:
         f = pd.read_csv('sequences/'+sample_name+'.tsv', sep='\t', index_col=0, low_memory=False)
-    f = f[f.chain == 'H']
+    if 'chain' in f.columns:
+        f = f[f.chain == 'H']
     return f[f[fam_type].notna()]
 
 
@@ -53,6 +54,19 @@ def read_collapsed_ids(path):
     return collapsed_ids
 
 
+def import_and_build_sparse_counts(sample_list, fam_label='familiy_pairs', count_label='pair_count'):
+    aux = pd.DataFrame()
+    for sample_name in sample_list:
+        fr = read_family_frame(sample_name, fam_type=fam_label)
+        if count_label not in fr.columns:
+            print('count label not found, setting the counts to 1')
+            fr[count_label] = 1
+        clone_counts = fr.groupby(fam_label).agg({count_label : sum})
+        clone_counts = clone_counts.rename({count_label : 'counts_' + sample_name}, axis=1)
+        aux = pd.merge(aux, clone_counts, how='outer', left_index=True, right_index=True).fillna(0)
+    return build_sparse_counts(np.array(aux.astype(int)).T)
+
+
 def build_sparse_counts(count_list):
     """
     Sparse representation of counts of R replicates. Each unique combination of 
@@ -83,50 +97,6 @@ def build_sparse_counts(count_list):
     return count_fr.sort_values('occ', ascending=False)
 
 
-
-def build_sparse_sort_counts(count_list):
-    """
-    Sparse-sort representation of counts of R replicates. Each unique combination of 
-    R counts *without order* is associated with its multiplicity/occurrence in the replicates
-    """
-    
-    sparse_sort_counts = build_sparse_counts(count_list)
-    n_dim = len(count_list)
-    
-    ns_labels = ['n'+str(i) for i in range(1, n_dim+1)]
-    ns = sparse_sort_counts[ns_labels].values
-    a_sort = np.argsort(ns, axis=1)
-    ns_sorted = np.take_along_axis(ns, a_sort, 1)
-    sparse_sort_counts[ns_labels] = ns_sorted
-    
-    for n_lab in ns_labels:
-        sparse_sort_counts[n_lab+'_str'] = np.array(sparse_sort_counts[n_lab], dtype=str)
-    for n_lab in ns_labels[1:]:
-        sparse_sort_counts['n1_str'] += '_' + sparse_sort_counts[n_lab+'_str']
-    
-    agg_dict = {n_lab : 'first' for n_lab in ns_labels}
-    agg_dict['occ'] = sum    
-    
-    return sparse_sort_counts.groupby('n1_str').agg(agg_dict).sort_values('occ', ascending=False)
-
-
-
-def downsample_frame(f, n_reads):
-    
-    all_seqs = np.array([])
-    n_counts = np.unique(f.pair_count.values)
-    for n in n_counts:
-        ids = np.array(list(f[f.pair_count == n].index))
-        ids = np.repeat(ids, n)
-        all_seqs = np.append(all_seqs, ids)
-    
-    sub_samples = np.random.choice(all_seqs, n_reads, replace=False)
-    uni_subsamp, count_subsamp = np.unique(sub_samples, return_counts=True)
-    sub_fr = f.loc[uni_subsamp]
-    sub_fr.pair_count = count_subsamp
-    return sub_fr
-
-
 def _read_infer_result(f, result):
     
     read_params, read_errs = False, False
@@ -146,10 +116,10 @@ def _read_infer_result(f, result):
     return result
 
 
-
 def read_noise_result(path, model):
     
-    f = open(path + 'infer_noise_'+model+'.txt')
+    #f = open(path + 'infer_noise_'+model+'.txt')
+    f = open(path)
     result = dict()
     result['model'] = model
     result = _read_infer_result(f, result)
@@ -169,42 +139,27 @@ def read_gbm_result(path, n1_min, sub_name=""):
     return result
 
 
-def import_sample_counts(sample_name, metadata):
-    merged_counts = pd.DataFrame(columns=['familiy_pairs'])
-    for r in range(metadata.loc[sample_name].repl_count):
-        r_fr = read_family_frame(sample_name+'_r'+str(r+1), True, fam_type='familiy_pairs')
-        f_aux = r_fr.groupby('familiy_pairs').agg({'pair_count':sum})
-        #print('N cells repl ' + str(r+1) + ':', np.sum(f_aux.pair_count))
-        merged_counts = pd.merge(merged_counts, f_aux, on='familiy_pairs', how='outer', suffixes=('', '_'+str(r+1))).fillna(0)
-    count_mat = np.array(merged_counts.drop('familiy_pairs', axis=1).values, dtype=int)
+def import_sample_counts(sample_name, n_repl, family_label='familiy_pairs', count_label='pair_count'):
+    """
+    For a given sample with multiple replicate it returns the sparse representation
+    of counts across replicates: a list of unique counts per replicate [n_1, n_2, ..., n_R]
+    and the multiplicity of that configuration.
+    """
+    merged_counts = pd.DataFrame(columns=[family_label])
+    
+    for r in range(n_repl):
+        r_fr = read_family_frame(sample_name+'_r'+str(r+1), True, fam_type=family_label)
+        if count_label not in r_fr.columns:
+            r_fr[count_label] = 1
+        f_aux = r_fr.groupby(family_label).agg({count_label:sum})
+        merged_counts = pd.merge(merged_counts, f_aux, on=family_label, how='outer', 
+                                 suffixes=('', '_'+str(r+1))).fillna(0)
+    count_mat = np.array(merged_counts.drop(family_label, axis=1).values, dtype=int)
     sp = build_sparse_counts(count_mat.T)
     n_uniq = sp[['n'+str(r+1) for r in range(len(count_mat[0]))]].values
     n_counts = sp['occ'].values
+    
     return n_uniq, n_counts
-
-
-def read_noise_result(path, model):
-    
-    f = open(path + 'infer_noise_'+model+'.txt')
-    result = dict()
-    result['model'] = model
-    
-    read_params, read_errs = False, False
-    for l in f.readlines():
-
-        key = l.split('\t')[0][:-1]
-        if read_params and not read_errs and len(l.split('\t')) > 1:
-            result[key] = float(l.split('\t')[1])
-        if read_errs and len(l.split('\t')) > 1:
-            result['err_'+key] = float(l.split('\t')[1])
-
-        if key == 'success': result[key] = l.split('\t')[1][:-1]
-        if key == 'minus_ll': result['ll'] = -float(l.split('\t')[1])
-        if key == 'best parameters:': read_params = True
-        if key == 'errors:': read_errs = True
-
-    f.close()
-    return result
 
 
 def update_result_frame(frame, vals_i, vals_j, res_mat):
@@ -242,3 +197,19 @@ def read_result_frame(frame):
         means[i,j] = np.mean(vals)
         stds[i,j] = np.std(vals)
     return counts, means, stds, np.array(val_x, dtype=float), np.array(val_y, dtype=float)
+
+
+def downsample_frame(f, n_reads, count_label='pair_count'):
+    
+    all_seqs = np.array([])
+    n_counts = np.unique(f[count_label].values)
+    for n in n_counts:
+        ids = np.array(list(f[f[count_label] == n].index))
+        ids = np.repeat(ids, n)
+        all_seqs = np.append(all_seqs, ids)
+    
+    sub_samples = np.random.choice(all_seqs, n_reads, replace=False)
+    uni_subsamp, count_subsamp = np.unique(sub_samples, return_counts=True)
+    sub_fr = f.loc[uni_subsamp]
+    sub_fr[count_label] = count_subsamp
+    return sub_fr
