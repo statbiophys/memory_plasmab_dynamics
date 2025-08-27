@@ -1,0 +1,15 @@
+	0
+n_eval	300000
+bounds00	0.8
+bounds01	80.0
+bounds10	1.0
+bounds11	2.0
+gamma_priors0	5
+gamma_priors1	4
+noise	0.01
+lenght_scales0	10.0
+lenght_scales1	1.0
+xi	0.0002
+n_calls	250
+n_jobs	3
+log	True

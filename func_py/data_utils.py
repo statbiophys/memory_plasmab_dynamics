@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from os import listdir
+from os import listdir, path
+
 
 
 def read_pars(path):
@@ -8,7 +9,10 @@ def read_pars(path):
     pars = dict()
     for l in f:
         try:
-            pars[l.split('\t')[0]] = float(l.split('\t')[1])
+            key = l.split('\t')[0]
+            if key[-1] == ':':
+                key = key[:-1]
+            pars[key] = float(l.split('\t')[1])
         except:
             pass
     f.close()
@@ -213,3 +217,37 @@ def downsample_frame(f, n_reads, count_label='pair_count'):
     sub_fr = f.loc[uni_subsamp]
     sub_fr[count_label] = count_subsamp
     return sub_fr
+
+
+def discretize(xs_list, n_discr):
+    """
+    Discretization of the values in xs_list in n_discr bins. xs list is a 2d array.
+    It returns the count of xs in each bin and the binned interval xs
+    """
+    x_bins = np.linspace(np.min(xs_list), np.max(xs_list), n_discr)
+    x_vals = x_bins + (x_bins[1] - x_bins[0]) / 2.0
+    xs_bins = np.array([np.digitize(x, x_bins) for x in xs_list]) - 1
+    return xs_bins, x_vals
+
+
+def read_noise_negbin_a(folder, samples):
+    
+    noise_inferred = np.zeros(len(samples), dtype=bool)
+    a_neg_bin = np.zeros(len(samples))
+    for i, samp in enumerate(samples):
+        pth = folder + samp + '_negbin.txt'
+        isthere = path.exists(pth)
+        if isthere:
+            res = read_noise_result(pth, 'negbin')
+            a_neg_bin[i] = res['a']
+            noise_inferred[i] = True
+
+    if not any(noise_inferred):
+        print('noise model not found for any of the samples')
+
+    if not all(noise_inferred):
+        print('one or more samples do not have a lerned model, the parameter is set as the average of the others')
+        a_mean = np.mean(a_neg_bin[noise_inferred])
+        a_neg_bin[np.logical_not(noise_inferred)] = a_mean
+        
+    return a_neg_bin

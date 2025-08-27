@@ -36,17 +36,17 @@ cmake --build .
 For each figure we point at the notebook (for both the datasets) that is used to generate it. 
 #### Main
 - **Fig. 2**: `7.3_infer_noise_marginals.ipynb`
-- **Fig. 3**:
+- **Fig. 3**: `8.3_gbm_marginals.ipynb`
 - **Fig. 4**:
 
 #### Supplementary Material
 - **Figs. S1, S2**: `5_seq_info.ipynb`
 - **Figs. S3, S4**: `7.2_infer_noise_results.ipynb`
 - **Figs. S5**: `7.3_infer_noise_marginals.ipynb`
-- **Figs. S6**: 
-- **Figs. S7**: 
-- **Figs. S8**: 
-- **Figs. S9**: 
+- **Figs. S6**: `8.2_infer_gbm.ipynb`
+- **Figs. S7**: `6.4_hilary_info.ipynb`
+- **Figs. S8**: `8.2_infer_gbm.ipynb`
+- **Figs. S9**: `8.3_gbm_marginals.ipynb`
 - **Figs. S10**: 
 - **Figs. S11**: 
 

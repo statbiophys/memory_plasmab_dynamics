@@ -1,8 +1,10 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
+
 #include "src/noise_plaw_poisson.h"
 #include "src/noise_plaw_negbin.h"
+#include "src/gbm_like.h"
 
 
 namespace py = pybind11;
@@ -34,6 +36,14 @@ PYBIND11_MODULE(like_func, m) {
         .def_readwrite("b", &plaw_negbin_pars::b, "negative binomial param b, from var = mean + a * mean ** b")
         .def_readwrite("Ms", &plaw_negbin_pars::Ms, "total counts for each sample");
     
+    py::class_<gbm_likeMC_pars>(m, "gbm_likeMC_pars", "container of geometric brownian motion parameters")
+        .def(py::init<double, double, double, double>(), py::arg("tau"), py::arg("theta"), py::arg("M_tot"), py::arg("n0"))
+        .def_readwrite("tau", &gbm_likeMC_pars::tau, "decay time of the GBM")
+        .def_readwrite("theta", &gbm_likeMC_pars::theta, "standard deviation of log counts of a GBM")
+        .def_readwrite("alpha", &gbm_likeMC_pars::alpha, "Exponent of the cumulative")
+        .def_readwrite("M_tot", &gbm_likeMC_pars::M_tot, "")
+        .def_readwrite("n0", &gbm_likeMC_pars::n0, "");
+
 
     // Power law things
 
@@ -92,5 +102,17 @@ PYBIND11_MODULE(like_func, m) {
         In case of sum(ns) == 0, it computes the Hessian of log(1-P(0)). \
         logfmin=true returns the hessian of the transformed variables log10 fmin. \
         The variable order is beta, fmin, a, b, c.");
+        
+        
+    // Stochastic trajectories generation
+    
+    m.def("gen_gbm_traj", &gen_gbm_traj, 
+          py::arg("tau"), py::arg("theta"), py::arg("xs"), py::arg("delta_t"), py::arg("dt"),
+          "Generates the samples of a Brownian motion with absorbing conditions in 0.");
+
+    m.def("gen_gbm_create_traj", &gen_gbm_create_traj, 
+          py::arg("tau"), py::arg("theta"), py::arg("n0"), py::arg("s"), py::arg("xs"), py::arg("delta_t"), py::arg("dt"),
+          "Generates the samples of a Brownian motion with absorbing conditions in 0. Uniform creation of new clones of size n0 to \
+          preserve stationarity.");
 
 }
