@@ -5,6 +5,7 @@
 #include "src/noise_plaw_poisson.h"
 #include "src/noise_plaw_negbin.h"
 #include "src/gbm_like.h"
+#include "src/memplasm_like.h"
 
 
 namespace py = pybind11;
@@ -43,6 +44,16 @@ PYBIND11_MODULE(like_func, m) {
         .def_readwrite("alpha", &gbm_likeMC_pars::alpha, "Exponent of the cumulative")
         .def_readwrite("M_tot", &gbm_likeMC_pars::M_tot, "")
         .def_readwrite("n0", &gbm_likeMC_pars::n0, "");
+        
+    py::class_<memplasm_pars>(m, "memplasm_pars", "container of parameters")
+        .def(py::init<double, double, double, double, double, double>(), 
+            py::arg("tau_m"), py::arg("theta_m"), py::arg("rho"), py::arg("tau_p"), py::arg("theta_p"), py::arg("n0")=0)
+        .def_readwrite("tau_m", &memplasm_pars::tau_m, "exp decay time of the memory cells")
+        .def_readwrite("theta_m", &memplasm_pars::theta_m, "inverse standard deviation of log counts of the memory")
+        .def_readwrite("rho", &memplasm_pars::rho, "differentiation rate from memory to plasmablasts")
+        .def_readwrite("tau_p", &memplasm_pars::tau_p, "exp decay time of the plasmablast")
+        .def_readwrite("theta_p", &memplasm_pars::theta_p, "inverse standard deviation of log counts of the plasmablasts")
+        .def_readwrite("n0", &memplasm_pars::n0, "size of clone at reintroduction");
 
 
     // Power law things
@@ -114,5 +125,11 @@ PYBIND11_MODULE(like_func, m) {
           py::arg("tau"), py::arg("theta"), py::arg("n0"), py::arg("s"), py::arg("xs"), py::arg("delta_t"), py::arg("dt"),
           "Generates the samples of a Brownian motion with absorbing conditions in 0. Uniform creation of new clones of size n0 to \
           preserve stationarity.");
+          
+    m.def("gen_memplasm_traj", &gen_memplasm_traj, 
+          py::arg("pars"), py::arg("x0s"), py::arg("n0s"), py::arg("time"), py::arg("dt"), py::arg("seed"),
+          "Generates the samples of memory-plasmablast dynamics  with absorbing conditions in 0 given initial conditions of \
+          memory log-counts, x0s, and plasmablast counts, n0s. \
+          It returns a 2d vector that stores the memory log-counts and the plasmablast counts at the last time point. ");
 
 }

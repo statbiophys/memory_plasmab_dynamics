@@ -37,7 +37,7 @@ For each figure we point at the notebook (for both the datasets) that is used to
 #### Main
 - **Fig. 2**: `7.3_infer_noise_marginals.ipynb`
 - **Fig. 3**: `8.3_gbm_marginals.ipynb`
-- **Fig. 4**:
+- **Fig. 4**: `9.2_memplasm_marginals.ipynb`
 
 #### Supplementary Material
 - **Figs. S1, S2**: `5_seq_info.ipynb`
@@ -47,8 +47,8 @@ For each figure we point at the notebook (for both the datasets) that is used to
 - **Figs. S7**: `6.4_hilary_info.ipynb`
 - **Figs. S8**: `8.2_infer_gbm.ipynb`
 - **Figs. S9**: `8.3_gbm_marginals.ipynb`
-- **Figs. S10**: 
-- **Figs. S11**: 
+- **Figs. S10**: `9.1_infer_memplasm.ipynb`
+- **Figs. S11**: `9.1_infer_memplasm.ipynb`
 
 
 
