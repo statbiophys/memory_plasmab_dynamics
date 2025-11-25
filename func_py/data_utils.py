@@ -19,7 +19,7 @@ def read_pars(path):
     return pars
 
 
-def read_family_frame(sample_name, is_replicate=False, fam_type='familiy_pairs'):
+def read_family_frame(sample_name, is_replicate=False, fam_type='family_pairs'):
     if is_replicate:
         f = pd.read_csv('sequences/replicates/'+sample_name+'.tsv', sep='\t', index_col=0, low_memory=False)
     else:
@@ -58,7 +58,7 @@ def read_collapsed_ids(path):
     return collapsed_ids
 
 
-def import_and_build_sparse_counts(sample_list, fam_label='familiy_pairs', count_label='pair_count'):
+def import_and_build_sparse_counts(sample_list, fam_label='family_pairs', count_label='pair_count'):
     aux = pd.DataFrame()
     for sample_name in sample_list:
         fr = read_family_frame(sample_name, fam_type=fam_label)
@@ -143,7 +143,7 @@ def read_gbm_result(path, n1_min, sub_name=""):
     return result
 
 
-def import_sample_counts(sample_name, n_repl, family_label='familiy_pairs', count_label='pair_count'):
+def import_sample_counts(sample_name, n_repl, family_label='family_pairs', count_label='pair_count'):
     """
     For a given sample with multiple replicate it returns the sparse representation
     of counts across replicates: a list of unique counts per replicate [n_1, n_2, ..., n_R]

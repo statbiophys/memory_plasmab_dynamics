@@ -1,4 +1,4 @@
-	v_call	j_call	c_call	junction	chain	family_heavy	family_pairs	family_changeO	pair_count
+	v_call	j_call	c_call	junction	chain	familiy_heavy	familiy_pairs	family_changeO	pair_count
 0	IGLV8-61*01	IGLJ2*01	IGLC2	TGTGTGCTGTATTTGGGTAGTGGCATTTCGATTTTC	L				1
 1	IGHV3-74*01	IGHJ6*02	IGHG1	TGTGTAAGAGAGGGGATATACGAATTTTGGAGAGGCGACCATGGGTCCGAAGGCATGGACGTCTGG	H	55201.0			1
 2	IGLV2-23*02	IGLJ1*01	IGLC1	TGCTGCTCATATGGAGGCAGTAGTAATTATGTCTTC	L				1
