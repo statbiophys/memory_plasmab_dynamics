@@ -10,6 +10,6 @@ noise	0.01
 lenght_scales0	10.0
 lenght_scales1	1.0
 xi	0.0002
-n_calls	10
+n_calls	250
 n_jobs	3
 log	True
