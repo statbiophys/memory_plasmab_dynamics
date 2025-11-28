@@ -1,0 +1,11 @@
+success:	True
+minus_ll:	2.7048295363837376
+n_points:	10000
+eps:	0.01
+ftol:	1e-05
+best parameters:
+beta:	2.433831130424398
+fmin:	-5.711243284395955
+errors:
+beta:	0.009625529428049276
+fmin:	0.022699220589922988

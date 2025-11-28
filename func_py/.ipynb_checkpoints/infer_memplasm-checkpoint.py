@@ -54,7 +54,7 @@ class mp_infer_pars():
 
         
         
-def import_data(mem_samples, pb_samples, fam_type='familiy_pairs', count_label='pair_count'):
+def import_data(mem_samples, pb_samples, fam_type='family_pairs', count_label='pair_count'):
     """
     Import the samples and collapse them in a sparse frame from a list of names of memory and plasmablast
     samples. The number of elements in the two list must be the same, and an empty string is used to indicate
