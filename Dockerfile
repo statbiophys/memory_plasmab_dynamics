@@ -32,6 +32,7 @@ COPY . /workspace/
 WORKDIR /workspace/func_build 
 RUN cmake CMakeLists.txt 
 RUN cmake --build . 
+RUN mkdir -p /opt/pybind_libs && cp /workspace/func_build/*.so /opt/pybind_libs
 
 # Return to main workspace 
 WORKDIR /workspace 

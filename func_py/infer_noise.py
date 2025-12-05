@@ -4,7 +4,7 @@ import my_utils as ut
 from scipy.optimize import minimize
 from pathlib import Path
 import sys
-sys.path.insert(0, "../func_build/")
+sys.path.append("/opt/pybind_libs/")
 import like_func as lf
 
 

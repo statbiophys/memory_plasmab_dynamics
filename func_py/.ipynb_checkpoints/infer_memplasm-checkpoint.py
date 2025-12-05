@@ -6,7 +6,7 @@ from itertools import product
 import sys
 import my_utils as ut
 import data_utils as dt
-sys.path.insert(0, "../func_build/")
+sys.path.append("/opt/pybind_libs/")
 import like_func as lf
 from multiprocessing import Pool, cpu_count
 from tqdm.notebook import tqdm

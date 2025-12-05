@@ -12,7 +12,7 @@ from skopt.learning.gaussian_process.kernels import Matern, WhiteKernel, Constan
 from skopt.plots import plot_gaussian_process, expected_minimum
 
 import sys
-sys.path.insert(0, "../func_build/")
+sys.path.append("/opt/pybind_libs/")
 import like_func as lf
 import data_utils as dtu
 
