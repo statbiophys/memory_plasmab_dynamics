@@ -65,7 +65,7 @@ def import_and_build_sparse_counts(sample_list, fam_label='family_pairs', count_
         if count_label not in fr.columns:
             print('count label not found, setting the counts to 1')
             fr[count_label] = 1
-        clone_counts = fr.groupby(fam_label).agg({count_label : sum})
+        clone_counts = fr.groupby(fam_label).agg({count_label : "sum"})
         clone_counts = clone_counts.rename({count_label : 'counts_' + sample_name}, axis=1)
         aux = pd.merge(aux, clone_counts, how='outer', left_index=True, right_index=True).fillna(0)
     return build_sparse_counts(np.array(aux.astype(int)).T)
@@ -92,7 +92,7 @@ def build_sparse_counts(count_list):
         
     count_fr['occ'] = 1
     agg_dict = {'n'+str(i+1) : 'first' for i in range(len(count_list))}
-    agg_dict['occ'] = sum   
+    agg_dict['occ'] = "sum"   
     count_fr = count_fr.groupby('index').agg(agg_dict)
 
     for i in range(len(count_list)):
@@ -155,7 +155,7 @@ def import_sample_counts(sample_name, n_repl, family_label='family_pairs', count
         r_fr = read_family_frame(sample_name+'_r'+str(r+1), True, fam_type=family_label)
         if count_label not in r_fr.columns:
             r_fr[count_label] = 1
-        f_aux = r_fr.groupby(family_label).agg({count_label:sum})
+        f_aux = r_fr.groupby(family_label).agg({count_label:"sum"})
         merged_counts = pd.merge(merged_counts, f_aux, on=family_label, how='outer', 
                                  suffixes=('', '_'+str(r+1))).fillna(0)
     count_mat = np.array(merged_counts.drop(family_label, axis=1).values, dtype=int)

@@ -48,7 +48,7 @@ sudo docker build -t infer-b-cell-nb .
 sudo docker run -p 8888:8888 -v $(pwd):/workspace infer-b-cell-nb
 ```
 
-The last command execute jupyter, but you still need to link that to your favourite browser. You just need to copy one of the two urls printed at terminal below the sentence `Or copy and paste one of these URLs:`, and paste it on your browser.
+The last command execute jupyter, but you still need to link that to your favourite browser. You just need to copy the second of the two urls printed at terminal below the sentence `Or copy and paste one of these URLs:`, and paste it on your browser.
 
 
 ### Reproducing the figures

@@ -108,7 +108,7 @@ def get_pn_at_m_minus(samp_index, m_minus, R, sp_count_fr):
     n_other_labels = ['n'+str(i+1) for i in range(R) if i+1 != samp_index]
     sp_count_fr['m_minus_i'] = sp_count_fr[n_other_labels].sum(axis=1)
     aux = sp_count_fr[sp_count_fr['m_minus_i'] == m_minus]
-    aux = aux.groupby('n'+str(samp_index)).agg(sum)
+    aux = aux.groupby('n'+str(samp_index)).agg("sum")
     return aux.index.values, aux['occ'].values / np.sum(aux['occ'])
 
 
