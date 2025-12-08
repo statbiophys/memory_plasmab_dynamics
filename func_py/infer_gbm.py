@@ -127,7 +127,7 @@ def MC_gbm_full_ll(sp_counts, tau, theta, pars, import_f, build_probs=False):
         mus.append(np.append(0, Ms[i] * x_exp / gbm_pars.M_tot))
 
     ll, tot_counts = 0, 0
-    probs = pd.DataFrame(index=sp_counts.index, data={'prob' : np.zeros(len(sp_counts), dtype=int)})
+    probs = pd.DataFrame(index=sp_counts.index, data={'prob' : np.zeros(len(sp_counts))})
     for _id, row in sp_counts.iterrows():
 
         if row.n1 < pars.n1_min: 
