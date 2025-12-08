@@ -113,7 +113,7 @@ vec2d gen_memplasm_traj(const memplasm_pars &pars, const vecd &x0_m, const vecd 
     if (pars.n0 > 0){
         double s = R / log(pars.n0) / pars.tau_m;
         unsigned int n_new_clones = gsl_ran_poisson(r, s * time);
-        std::cout << n_new_clones << std::endl;
+        //std::cout << n_new_clones << std::endl;
         vecd x_new_m = vecd(n_new_clones);
         vecd n_new_p = vecd(n_new_clones);
         for (unsigned int i = 0; i < n_new_clones; i++){

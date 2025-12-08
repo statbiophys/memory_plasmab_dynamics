@@ -66,7 +66,7 @@ def import_data(mem_samples, pb_samples, fam_type='family_pairs', count_label='p
         if count_label not in sample.columns:
             print('count label not found, setting the counts to 1')
             sample[count_label] = 1
-        clone_counts = sample.groupby(fam_type).agg({count_label : sum})
+        clone_counts = sample.groupby(fam_type).agg({count_label : "sum"})
         return clone_counts.rename({count_label : 'counts_' + short_id}, axis=1)
         
     pars_d = {'m_ids' : [], 'p_ids' : []}
@@ -101,7 +101,7 @@ def import_data(mem_samples, pb_samples, fam_type='family_pairs', count_label='p
         agg_d['counts_p' + str(t+1)] = 'first'
         
     aux['occ'] = 1
-    agg_d['occ'] = sum
+    agg_d['occ'] = "sum"
     sp_counts = aux.groupby('count_tuple').agg(agg_d)
     sp_counts = sp_counts.astype(int).sort_values('occ', ascending=False)
     
